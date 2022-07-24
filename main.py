@@ -12,16 +12,16 @@ df_matches = pd.read_csv('IPL Matches 2008-2020.csv')
 
 import streamlit as st
 
-with st.sidebar:
-  radio = st.radio('Main Menu : ', ('Match Stats', 'Player stats', 'Dream 11'))
-  if radio == 'Match Stats':
-    st.header('IPL Team Wise Data' )
+
+radio = st.sidebar.radio('Main Menu : ', ('Match Stats', 'Player stats', 'Dream 11'))
+if radio == 'Match Stats':
+  st.header('IPL Team Wise Data' )
 
 
-  elif radio == 'Player stats':
-    st.header('IPL Players Data' ) 
+elif radio == 'Player stats':
+  st.header('IPL Players Data' ) 
 
 
-  elif radio == 'Dream 11':
-    st.header('AI Based Recommended Dream11 Players' )
+elif radio == 'Dream 11':
+  st.header('AI Based Recommended Dream11 Players' )
 
