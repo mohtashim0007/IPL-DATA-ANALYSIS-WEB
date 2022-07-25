@@ -39,8 +39,8 @@ def matches_won_by_team1_team2(team1, team2):
   plt.title('Matches won against each other')
   plt.xlabel('Teams Name')
   plt.ylabel('Matches Won')
-  plt.savefig('fig1.jpg')
-  img = cv2.imread('fig1.jpg')
+  plt.savefig('./fig1.jpg')
+  img = cv2.imread('./fig1.jpg')
   img = cv2.resize(img, (880,824))
   _,col,_ = st.columns([1,4,1])
   with col:
@@ -60,8 +60,8 @@ def matches_won_by_runs_wickets(team_name):
   plt.xlabel('Runs/Wickets')
   plt.ylabel('Matches Won ')
   plt.xticks([0,1,2],['Runs', 'Wickets', 'Tie'], rotation = 45)
-  plt.savefig('fig2.jpg')
-  img2 = cv2.imread('fig2.jpg')
+  plt.savefig('./fig2.jpg')
+  img2 = cv2.imread('./fig2.jpg')
   img2 = cv2.resize(img2, (880,824))
   st.image(img2)
 
@@ -92,11 +92,11 @@ if radio == 'Match Stats':
   st.text(' ')
   if st.checkbox('Number of Matches won by each Team :'):
     st.write('Bar chart showing mathes won by the teams :')
-    img = cv2.imread('matches_won_by_each_team_barplot.jpg')
+    img = cv2.imread('./matches_won_by_each_team_barplot.jpg')
     st.image(img)
     st.text(' ')
     st.write('Pie Chart showing percentage os matches won by each team :')
-    img = cv2.imread('matches_won_by_each_team_pieChart.jpg')
+    img = cv2.imread('./matches_won_by_each_team_pieChart.jpg')
     st.image(img)
 
 
