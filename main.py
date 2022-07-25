@@ -62,8 +62,6 @@ if radio == 'Match Stats':
     team2 = st.selectbox('Select second team from the list : ', (team_names_list), index = 3)
     if st.button('Submit') and team1 != team2:
       matches_won_by_team1_team2(team1, team2)
-    else:
-      st.write('Please select two different teams')
 
 
 
