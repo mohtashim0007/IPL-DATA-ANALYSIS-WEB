@@ -33,7 +33,7 @@ def matches_won_by_team1_team2(team1, team2):
   new_df = pd.concat([temp1,temp2], ignore_index = True)
 
   #plotting
-  fig = plt.figure()
+  fig = plt.figure(figsize=(2,2))
   sns.countplot(x = 'winner', data = new_df,dodge= False, palette = np.random.choice(fig_colors))
   plt.title('Matches won against each other')
   plt.xlabel('Teams Name')
@@ -43,13 +43,13 @@ def matches_won_by_team1_team2(team1, team2):
 
 
 
-radio = st.sidebar.radio('Main Menu : ', ('Match Stats', 'Player stats', 'Dream 11'))
+radio = st.sidebar.radio('**Main Menu :**', ('Match Stats', 'Player stats', 'Dream 11'))
 if radio == 'Match Stats':
   _,col,_ = st.columns([1,2,1])
   with col:
     st.header('IPL Team Wise Data' )
   st.text('')
-  if st.checkbox('Comparision of two IPL Teams'):
+  if st.checkbox('**Comparision of two IPL Teams**'):
     team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
     team1 = st.selectbox('Select first Team from the list : ', (team_names_list), index = 2)
     team2 = st.selectbox('Select second team from the list : ', (team_names_list), index = 3)
