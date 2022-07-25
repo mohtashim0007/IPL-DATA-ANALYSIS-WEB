@@ -62,6 +62,7 @@ def matches_won_by_runs_wickets(team_name):
   plt.xlabel('Runs/Wickets')
   plt.ylabel('Matches Won ')
   plt.xticks([0,1,2],['Runs', 'Wickets', 'Tie'], rotation = 45)
+  plt.show()
   st.pyplot(fig_2)
   #plt.savefig('./fig2.jpg')
   #img2 = cv2.imread('./fig2.jpg')
