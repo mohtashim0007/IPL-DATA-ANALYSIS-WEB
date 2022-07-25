@@ -107,17 +107,22 @@ if radio == 'Match Stats':
   #Matches won by runs/wicets
   st.text(' ') 
   if st.checkbox('Matches won by Runs/Wickets or Tie :'):
-    plt.figure(figsize = (18,8))
-    sns.countplot(x='winner', hue='result', data = df_matches, palette=np.random.choice(fig_colors))
-    plt.xticks(rotation = 45)
-    plt.savefig('fig1.jpg')
-    img = cv2.imread('fig1.jpg')
-    st.image(img)
-    st.text(' ')
     
-    st.write('View Team wise :')
-    team = st.selectbox('',team_names_list, index = 3)
-    if st.button('Submit',key = '2'):
+    radio_button = st.radio('Click on the radio button :', (['Graph for each teams','Team wise Graph']))
+    
+    if radio_button == 'Graph for each teams':      
+      plt.figure(figsize = (18,8))
+      sns.countplot(x='winner', hue='result', data = df_matches, palette=np.random.choice(fig_colors))
+      plt.xticks(rotation = 45)
+      plt.savefig('fig1.jpg')
+      img = cv2.imread('fig1.jpg')
+      st.image(img)
+      st.text(' ')
+      
+    elif radio_button = 'Team wise Graph':      
+      st.write('View Team wise :')
+      team = st.selectbox('',team_names_list, index = 3)
+      #if st.button('Submit',key = '2'):
       matches_won_by_runs_wickets(team)
 
 
