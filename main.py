@@ -47,7 +47,7 @@ def matches_won_by_team1_team2(team1, team2):
     st.image(img)
   
 
-
+#MATCHES WON BY RUNS/WICKETS
 def matches_won_by_runs_wickets(team_name):
   temp5 = df_matches[df_matches['team1'] == team_name]
   temp5 = temp5[temp5['winner'] == temp5['team1']]
@@ -60,12 +60,10 @@ def matches_won_by_runs_wickets(team_name):
   plt.xlabel('Runs/Wickets')
   plt.ylabel('Matches Won ')
   plt.xticks([0,1,2],['Runs', 'Wickets', 'Tie'], rotation = 45)
-  plt.savefig('fig1.jpg')
-  img = cv2.imread('fig1.jpg')
+  plt.savefig('fig2.jpg')
+  img = cv2.imread('fig2.jpg')
   img = cv2.resize(img, (880,824))
-  _,col,_ = st.columns([1,4,1])
-  with col:
-    st.image(img)
+  st.image(img)
 
 
 
