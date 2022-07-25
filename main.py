@@ -122,11 +122,7 @@ if radio == 'Match Stats':
       #if st.button('Submit',key = '2'):
       matches_won_by_runs_wickets(team)
    
-  #IPL Umpires
-  if st.checkbox('IPL Umpires'):
-    st.write('Graph shows umpires with the number of matches they umpired.')
-    img = cv2.imread('./Umpire_fig.jpg')
-    st.image(img)
+
     
   #Man of the matches
   st.text(' ')
@@ -148,7 +144,12 @@ if radio == 'Match Stats':
     st.write('Man of the Matches for ',player,' is ',MoM[player]) 
     
     
-    
+  #IPL Umpires
+  st.text('')
+  if st.checkbox('IPL Umpires'):
+    st.write('Graph shows umpires with the number of matches they umpired.')
+    img = cv2.imread('./Umpire_fig.jpg')
+    st.image(img)  
 
 
 
