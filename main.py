@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import cv2
 import streamlit as st
 
 fig_colors = ['Set1', 'Set2', 'Set3', 'tab10' ,'deep', 'hls', 'husl', 'rocket_r', 'YlOrBr', 'Spectral']
@@ -33,12 +34,15 @@ def matches_won_by_team1_team2(team1, team2):
   new_df = pd.concat([temp1,temp2], ignore_index = True)
 
   #plotting
-  fig = plt.figure(figsize=(1,1))
+  fig = plt.figure(figsize=(5,5))
   sns.countplot(x = 'winner', data = new_df,dodge= False, palette = np.random.choice(fig_colors))
-  plt.title('Matches won against each other',fontdict={'size' : 8})
-  plt.xlabel('Teams Name',fontdict={'size' : 8})
-  plt.ylabel('Matches Won',fontdict={'size' : 8})
-  st.pyplot(fig)
+  plt.title('Matches won against each other')
+  plt.xlabel('Teams Name')
+  plt.ylabel('Matches Won')
+  plt.savefig('fig1.jpg')
+  img = cv2.imread('fig1.jpg')
+  img = cv2.resize(img, (280,224))
+  st.image(img)
 
 
 
