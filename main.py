@@ -1,3 +1,5 @@
+
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,9 +33,8 @@ def matches_won_by_team1_team2(team1, team2):
   new_df = pd.concat([temp1,temp2], ignore_index = True)
 
   #plotting
-  fig = plt.figure(figsize=(5,5))
+  fig = plt.figure()
   sns.countplot(x = 'winner', data = new_df,dodge= False, palette = np.random.choice(fig_colors))
-  plt.ylim(0,18)
   plt.title('Matches won against each other')
   plt.xlabel('Teams Name')
   plt.ylabel('Matches Won')
@@ -50,8 +51,8 @@ if radio == 'Match Stats':
   st.text('')
   if st.checkbox('Comparision of two IPL Teams'):
     team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
-    team1 = st.selectbox('Select first Team from the list : ', (team_names_list))
-    team2 = st.selectbox('Select second team from the list : ', (team_names_list))
+    team1 = st.selectbox('Select first Team from the list : ', (team_names_list), index = 2)
+    team2 = st.selectbox('Select second team from the list : ', (team_names_list), index = 3)
     if st.button('Submit') and team1 != team2:
       matches_won_by_team1_team2(team1, team2)
     else:
