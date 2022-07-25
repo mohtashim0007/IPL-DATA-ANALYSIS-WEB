@@ -72,10 +72,12 @@ if radio == 'Match Stats':
   st.text(' ')
   if st.checkbox('Number of Matches won by each Team :'):
     st.write('Bar chart showing mathes won by the teams :')
-    st.image('matches_won_by_each_team_barplot.jpg')
+    img = cv2.imread('matches_won_by_each_team_barplot.jpg')
+    st.image(img)
     st.text(' ')
     st.write('Pie Chart showing percentage os matches won by each team :')
-    st.image('matches_won_by_each_team_pieChart.jpg')
+    img = cv2.imread('matches_won_by_each_team_pieChart.jpg')
+    st.image(img)
 
 
   #Matches won by chasing
@@ -85,7 +87,8 @@ if radio == 'Match Stats':
     sns.countplot(x='winner', hue='result', data = df_matches, palette=np.random.choice(fig_colors))
     plt.xticks(rotation = 45)
     plt.savefig('fig1.jpg')
-    st.image('fig1.jpg')
+    img = cv2.imread('fig1.jpg')
+    st.image(img)
     st.text(' ')
     
 
