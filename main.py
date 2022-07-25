@@ -41,19 +41,22 @@ def matches_won_by_team1_team2(team1, team2):
   plt.ylabel('Matches Won')
   plt.savefig('fig1.jpg')
   img = cv2.imread('fig1.jpg')
-  img = cv2.resize(img, (280,224))
-  st.image(img)
+  img = cv2.resize(img, (380,324))
+  _,col,_ = st.columns([1,2,1])
+  with col:
+    st.image(img)
+  
 
 
 
 
-radio = st.sidebar.radio('**Main Menu :**', ('Match Stats', 'Player stats', 'Dream 11'))
+radio = st.sidebar.radio('Main Menu :', ('Match Stats', 'Player stats', 'Dream 11'))
 if radio == 'Match Stats':
   _,col,_ = st.columns([1,2,1])
   with col:
     st.header('IPL Team Wise Data' )
   st.text('')
-  if st.checkbox('**Comparision of two IPL Teams**'):
+  if st.checkbox('Comparision of two IPL Teams'):
     team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
     team1 = st.selectbox('Select first Team from the list : ', (team_names_list), index = 2)
     team2 = st.selectbox('Select second team from the list : ', (team_names_list), index = 3)
