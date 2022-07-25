@@ -55,9 +55,9 @@ def matches_won_by_runs_wickets(team_name):
   temp6 = temp6[temp6['winner'] == temp6['team2']]
 
   temp7 = pd.concat([temp5, temp6],ignore_index = True)
-  sns.countplot(x ='result', data = temp7, dodge=False, palette = np.random.choice(fig_colors))
   
-  fig_2 = plt.figure(figsize=(5,5))
+  #fig_2 = plt.figure(figsize=(5,5))
+  sns.countplot(x ='result', data = temp7, dodge=False, palette = np.random.choice(fig_colors)) 
   plt.title('Bar graph depicts no. of matches won by runs/wickets')
   plt.xlabel('Runs/Wickets')
   plt.ylabel('Matches Won ')
