@@ -127,6 +127,28 @@ if radio == 'Match Stats':
     st.write('Graph shows umpires with the number of matches they umpired.')
     img = cv2.imread('./Umpire_fig.jpg')
     st.image(img)
+    
+  #Man of the matches
+  st.text(' ')
+  if st.checkbox('Man of the Matches Awards'):
+    MoM = df_matches['player_of_match'].value_counts()
+    st.table(MoM[0:5])
+    st.text('')
+    fig = plt.figure()
+    sns.barplot(MoM[0:5].index.tolist(), MoM[0:5].tolist(),palette = np.random.choice(fig_colors))
+    plt.ylabel('No of times Player of the Match Won')
+    plt.xlabel('Player Names')
+    plt.title('Top 5 Players who won Man of the Match')
+    plt.ylim(0,25)
+    plt.savefig('fig1.jpg')
+    img = cv2.imread('fig1.jpg')
+    st.image(img)
+    
+    player = st.selectbox('Select your favourite player to check his Man of the Matches :', (MoM.index), index = 2)
+    st.write('Man of the Matches for ',player,' is ',MoM[player]) 
+    
+    
+    
 
 
 
