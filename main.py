@@ -56,17 +56,14 @@ def matches_won_by_runs_wickets(team_name):
 
   temp7 = pd.concat([temp5, temp6],ignore_index = True)
   
-  #fig_2 = plt.figure(figsize=(5,5))
   sns.countplot(x ='result', data = temp7, dodge=False, palette = np.random.choice(fig_colors)) 
   plt.title('Bar graph depicts no. of matches won by runs/wickets')
   plt.xlabel('Runs/Wickets')
   plt.ylabel('Matches Won ')
   plt.xticks([0,1,2],['Runs', 'Wickets', 'Tie'], rotation = 45)
-  #plt.show()
-  #st.pyplot(fig_2)
   plt.savefig('./fig2.jpg')
   img2 = cv2.imread('./fig2.jpg')
-  img2 = cv2.resize(img2, (880,824))
+  img2 = cv2.resize(img2, (880,524))
   st.image(img2)
 
 
@@ -111,7 +108,7 @@ if radio == 'Match Stats':
     radio_button = st.radio('Click on the radio button :', (['Graph for each teams','Team wise Graph']))
     
     if radio_button == 'Graph for each teams':      
-      plt.figure(figsize = (18,8))
+      fig = plt.figure(figsize = (18,8))
       sns.countplot(x='winner', hue='result', data = df_matches, palette=np.random.choice(fig_colors))
       plt.xticks(rotation = 45)
       plt.savefig('fig1.jpg')
