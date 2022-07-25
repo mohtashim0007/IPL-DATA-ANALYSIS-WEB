@@ -51,11 +51,15 @@ def matches_won_by_team1_team2(team1, team2):
 
 
 radio = st.sidebar.radio('Main Menu :', ('Match Stats', 'Player stats', 'Dream 11'))
+
+#MATCH STATS RADIO BUTTON
 if radio == 'Match Stats':
   _,col,_ = st.columns([1,2,1])
   with col:
     st.header('IPL Team Wise Data' )
   st.text('')
+
+  #COMAPRISION OF TEAMS CHECKBOX
   if st.checkbox('Comparision of two IPL Teams'):
     team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
     team1 = st.selectbox('Select first Team from the list : ', (team_names_list), index = 2)
@@ -63,14 +67,39 @@ if radio == 'Match Stats':
     if st.button('Submit') and team1 != team2:
       matches_won_by_team1_team2(team1, team2)
 
+  
+  #nUMBER OF MATCHES WON BY EACH TEAM
+  st.text(' ')
+  if st.checkbox('Number of Matches won by each Team :'):
+    st.write('Bar chart showing mathes won by the teams :')
+    st.image('matches_won_by_each_team_barplot.jpg')
+    st.text(' ')
+    st.write('Pie Chart showing percentage os matches won by each team :')
+    st.image('matches_won_by_each_team_pieChart.jpg')
 
 
+  #Matches won by chasing
+  st.text(' ') 
+  if st.checkbox('Matches won by Runs/Wickets or Tie :'):
+    plt.figure(figsize = (18,8))
+    sns.countplot(x='winner', hue='result', data = df_matches, palette=np.random.choice(fig_colors))
+    plt.xticks(rotation = 45)
+    plt.savefig('fig1.jpg')
+    st.image('fig1.jpg')
+    st.text(' ')
+    
+
+
+
+#PLAYER STATS MENU RADIO BUTTON
 elif radio == 'Player stats':
   _,col,_ = st.columns([1,2,1])
   with col:
     st.header('IPL Players Data' )
 
 
+
+#DREAM 11 TEAM SGGESTIONS RADIO BUTTON
 elif radio == 'Dream 11':
   _,col,_ = st.columns([1,2,1])
   with col:
