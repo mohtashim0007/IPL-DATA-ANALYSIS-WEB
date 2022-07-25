@@ -37,7 +37,7 @@ def matches_won_by_team1_team2(team1, team2):
   plt.title('Matches won against each other')
   plt.xlabel('Teams Name')
   plt.ylabel('Matches Won')
-  plt.plot()
+  st.pyplot(fig)
 
 
 
@@ -52,8 +52,10 @@ if radio == 'Match Stats':
     team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
     team1 = st.selectbox('Select first Team from the list : ', (team_names_list))
     team2 = st.selectbox('Select second team from the list : ', (team_names_list))
-    if st.button('Submit'):
+    if st.button('Submit') and team1 != team2:
       matches_won_by_team1_team2(team1, team2)
+     else:
+      st.write('Please select two different teams')
 
 
 
