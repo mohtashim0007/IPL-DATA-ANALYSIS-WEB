@@ -119,7 +119,7 @@ if radio == 'Match Stats':
       st.image(img)
       st.text(' ')
       
-    elif radio_button = 'Team wise Graph':      
+    elif radio_button == 'Team wise Graph':      
       st.write('View Team wise :')
       team = st.selectbox('',team_names_list, index = 3)
       #if st.button('Submit',key = '2'):
