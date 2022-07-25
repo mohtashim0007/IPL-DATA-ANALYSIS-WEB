@@ -35,9 +35,9 @@ def matches_won_by_team1_team2(team1, team2):
   #plotting
   fig = plt.figure(figsize=(2,2))
   sns.countplot(x = 'winner', data = new_df,dodge= False, palette = np.random.choice(fig_colors))
-  plt.title('Matches won against each other')
-  plt.xlabel('Teams Name')
-  plt.ylabel('Matches Won')
+  plt.title('Matches won against each other',fontdict={'size' : 8})
+  plt.xlabel('Teams Name',fontdict={'size' : 8})
+  plt.ylabel('Matches Won',fontdict={'size' : 8})
   st.pyplot(fig)
 
 
