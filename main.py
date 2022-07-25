@@ -51,7 +51,6 @@ if radio == 'Match Stats':
   if st.checkbox('Comparision of two IPL Teams'):
     team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
     team1 = st.selectbox('Select first Team from the list : ', (team_names_list))
-    team_names_list.remove(team1)
     team2 = st.selectbox('Select second team from the list : ', (team_names_list))
     if st.button('Submit'):
       matches_won_by_team1_team2(team1, team2)
