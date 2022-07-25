@@ -84,7 +84,7 @@ if radio == 'Match Stats':
   if st.checkbox('Comparision of two IPL Teams'):
     team1 = st.selectbox('Select first Team from the list : ', (team_names_list), index = 2)
     team2 = st.selectbox('Select second team from the list : ', (team_names_list), index = 3)
-    if st.button('Submit') and team1 != team2:
+    if st.button('Submit',key= '1') and team1 != team2:
       matches_won_by_team1_team2(team1, team2)
 
   
@@ -113,7 +113,7 @@ if radio == 'Match Stats':
     
     st.write('View Team wise :')
     team = st.selectbox('',team_names_list, index = 3)
-    if st.button('Submit'):
+    if st.button('Submit',key = '2'):
       matches_won_by_runs_wickets(team)
 
 
