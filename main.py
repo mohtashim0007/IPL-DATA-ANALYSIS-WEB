@@ -48,6 +48,27 @@ def matches_won_by_team1_team2(team1, team2):
   
 
 
+def matches_won_by_runs_wickets(team_name):
+  temp5 = df_matches[df_matches['team1'] == team_name]
+  temp5 = temp5[temp5['winner'] == temp5['team1']]
+  temp6 = df_matches[df_matches['team2'] == team_name]
+  temp6 = temp6[temp6['winner'] == temp6['team2']]
+
+  temp7 = pd.concat([temp5, temp6],ignore_index = True)
+  sns.countplot(x ='result', data = temp7, dodge=False, palette = np.random.choice(fig_colors))
+  plt.title('Bar graph depicts no. of matches won by runs/wickets')
+  plt.xlabel('Runs/Wickets')
+  plt.ylabel('Matches Won ')
+  plt.xticks([0,1,2],['Runs', 'Wickets', 'Tie'], rotation = 45)
+  plt.savefig('fig1.jpg')
+  img = cv2.imread('fig1.jpg')
+  img = cv2.resize(img, (880,824))
+  _,col,_ = st.columns([1,4,1])
+  with col:
+    st.image(img)
+
+
+
 
 
 radio = st.sidebar.radio('Main Menu :', ('Match Stats', 'Player stats', 'Dream 11'))
@@ -58,10 +79,11 @@ if radio == 'Match Stats':
   with col:
     st.header('IPL Team Wise Data' )
   st.text('')
+  
+  team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
 
   #COMAPRISION OF TEAMS CHECKBOX
   if st.checkbox('Comparision of two IPL Teams'):
-    team_names_list =['Royal Challengers Bangalore', 'Kings XI Punjab', 'Chennai Super Kings', 'Mumbai Indians', 'Kolkata Knight Riders', 'Rajasthan Royals', 'Deccan Chargers', 'Kochi Tuskers Kerala','Pune Warriors','Sunrisers Hyderabad','Gujarat Lions','Delhi Daredevils','Rising Pune Supergiant','Delhi Capitals']
     team1 = st.selectbox('Select first Team from the list : ', (team_names_list), index = 2)
     team2 = st.selectbox('Select second team from the list : ', (team_names_list), index = 3)
     if st.button('Submit') and team1 != team2:
@@ -80,7 +102,7 @@ if radio == 'Match Stats':
     st.image(img)
 
 
-  #Matches won by chasing
+  #Matches won by runs/wicets
   st.text(' ') 
   if st.checkbox('Matches won by Runs/Wickets or Tie :'):
     plt.figure(figsize = (18,8))
@@ -91,6 +113,10 @@ if radio == 'Match Stats':
     st.image(img)
     st.text(' ')
     
+    st.write('View Team wise :')
+    team = st.selectbox('',team_names_list, index = 3)
+    matches_won_by_runs_wickets(team)
+
 
 
 
