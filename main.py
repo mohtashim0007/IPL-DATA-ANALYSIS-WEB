@@ -91,7 +91,7 @@ if radio == 'Match Stats':
   
   #nUMBER OF MATCHES WON BY EACH TEAM
   st.text(' ')
-  if st.checkbox('Number of Matches won by each Team :'):
+  if st.checkbox('Number of Matches won by each Team '):
     st.write('Bar chart showing mathes won by the teams :')
     img = cv2.imread('./matches_won_by_each_team_barplot.jpg')
     st.image(img)
@@ -99,29 +99,6 @@ if radio == 'Match Stats':
     st.write('Pie Chart showing percentage os matches won by each team :')
     img = cv2.imread('./matches_won_by_each_team_pieChart.jpg')
     st.image(img)
-
-
-  #Matches won by runs/wicets
-  st.text(' ') 
-  if st.checkbox('Matches won by Runs/Wickets or Tie :'):
-    
-    radio_button = st.radio('Click on the radio button :', (['Graph for each teams','Team wise Graph']))
-    
-    if radio_button == 'Graph for each teams':      
-      fig = plt.figure(figsize = (18,8))
-      sns.countplot(x='winner', hue='result', data = df_matches, palette=np.random.choice(fig_colors))
-      plt.xticks(rotation = 45)
-      plt.savefig('fig1.jpg')
-      img = cv2.imread('fig1.jpg')
-      st.image(img)
-      st.text(' ')
-      
-    elif radio_button == 'Team wise Graph':      
-      st.write('View Team wise :')
-      team = st.selectbox('',team_names_list, index = 3)
-      #if st.button('Submit',key = '2'):
-      matches_won_by_runs_wickets(team)
-   
 
     
   #Man of the matches
@@ -142,8 +119,39 @@ if radio == 'Match Stats':
     
     player = st.selectbox('Select your favourite player to check his Man of the Matches :', (MoM.index), index = 2)
     st.write('Man of the Matches for ',player,' is ',MoM[player]) 
+
+
+  #Matches won by runs/wicets
+  st.text(' ') 
+  if st.checkbox('Matches won by Runs/Wickets or Tie '):
     
+    radio_button = st.radio('Click on the radio button :', (['Graph for each teams','Team wise Graph']))
     
+    if radio_button == 'Graph for each teams':      
+      fig = plt.figure(figsize = (18,8))
+      sns.countplot(x='winner', hue='result', data = df_matches, palette=np.random.choice(fig_colors))
+      plt.xticks(rotation = 45)
+      plt.savefig('fig1.jpg')
+      img = cv2.imread('fig1.jpg')
+      st.image(img)
+      st.text(' ')
+      
+    elif radio_button == 'Team wise Graph':      
+      st.write('View Team wise :')
+      team = st.selectbox('',team_names_list, index = 3)
+      #if st.button('Submit',key = '2'):
+      matches_won_by_runs_wickets(team)
+
+  #Matches won by chasing 
+  st.text()
+  if st.checkbox('Matches won by chasing '):
+    st.write('Total matches played by fielding first : 496')
+    st.write('Matches won  by chasing : 273')
+    st.write('Matches lost by chasing : 223')
+    st.write('Percentage of winning by chasing :  55.04 %')
+    img = cv2.imread('./won_by_chasing.jpg')
+    st.image(img)
+
   #IPL Umpires
   st.text('')
   if st.checkbox('IPL Umpires'):
