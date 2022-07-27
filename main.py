@@ -187,7 +187,7 @@ elif radio == 'Player stats':
 
     #View you favourite batsman runs
     if st.checkbox('View you favourite batsman runs '):
-      player_name = st.selectbox('Select player from the list : ',players_stats_df['name'],index = 5 )
+      player_name = st.selectbox('Select player from the list : ',(players_stats_df['name'].tolist()),index = 5 )
       temp13 = players_stats_df[players_stats_df['name'] == player_name]
       st.text('Below is data for  your favourite player :')
       st.table(temp13)
