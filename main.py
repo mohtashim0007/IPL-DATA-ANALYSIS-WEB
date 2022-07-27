@@ -1,5 +1,3 @@
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -143,7 +141,7 @@ if radio == 'Match Stats':
       matches_won_by_runs_wickets(team)
 
   #Matches won by chasing 
-  st.text()
+  st.text('')
   if st.checkbox('Matches won by chasing '):
     st.write('Total matches played by fielding first : 496')
     st.write('Matches won  by chasing : 273')
