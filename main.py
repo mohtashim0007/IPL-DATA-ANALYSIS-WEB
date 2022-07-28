@@ -10,9 +10,79 @@ import streamlit as st
 fig_colors = ['Set1', 'Set2', 'Set3', 'tab10' ,'deep', 'hls', 'husl', 'rocket_r', 'YlOrBr', 'Spectral']
 
 df_matches = pd.read_csv('IPL Matches 2008-2020.csv')
+df_ball = pd.read_csv('./IPL Ball-by-Ball 2008-2020.csv')
+
+#batsman stats aganst a particular bowler
+
+def batsman_against_bowler(batsman_name, bowler_name):
+  temp15 = df_ball[ df_ball['bowler'] == bowler_name ]
+  temp15 =  temp15[temp15['batsman'] == batsman_name ]
+  total_balls_faced = temp15.shape[0]
+  if total_balls_faced == 0:
+    return []
+
+  four_six = temp15['batsman_runs'].value_counts()
+  sixs = 0
+  fours = 0
+  runs_index = four_six.index.tolist()
+  if 4 in runs_index:
+    fours = four_six[4]
+  if 6 in runs_index:
+    sixs = four_six[6]
+  total_runs = temp15['total_runs'].sum()
+  is_wicket = temp15['is_wicket'].sum()
+  total_matches_played = temp15['id'].nunique()
+  total_balls_faced = temp15.shape[0]
+  avg_per_over = round((total_runs/total_balls_faced)*6,2)
+
+  return [total_matches_played, total_runs,is_wicket, total_balls_faced,fours,sixs]
 
 
+#function to collect team1 batting stats against team2 bowlers
+def team_batting_stats(team1,team2):
+  player_stats_list = []
 
+  for batsman in team1:
+    batsman_stats = []
+    for bowler in team2:
+      #result is in the form of   return [total_matches_played, total_runs,is_wicket, total_balls_faced,fours,sixs]
+      result = batsman_against_bowler(batsman, bowler)
+      if len(result)>0:
+        if len(batsman_stats)>0:
+          batsman_stats = list(np.add(batsman_stats,result))
+        else:
+          batsman_stats = result
+
+    #run_rate = round((total_runs/total_balls_faced)*6,2)
+    if len(batsman_stats) > 0:
+      run_rate =   round((batsman_stats[1]/batsman_stats[3])*6,2)
+      strike_rate = round((batsman_stats[1]/batsman_stats[3])*100,2)
+
+      player_stats_list.append([batsman] + batsman_stats + [ run_rate, strike_rate])
+
+  return player_stats_list
+
+
+#function to collect bowlers stats against team 2
+def team_bowling_stats(team1,team2):
+  player_stats_list = []
+
+  for bowler in team1:
+    bowler_stats = []
+    for batsman in team2:
+      result = batsman_against_bowler(batsman, bowler)
+      #result format   return [total_matches_played, total_runs,is_wicket, total_balls_faced,fours,sixs]
+      if len(result)>0:
+        if len(bowler_stats)>0:
+          bowler_statss = list(np.add(bowler_stats,result))
+        else:
+          bowler_stats = result
+
+    if len(bowler_stats) > 0:
+      economy =   round((bowler_stats[1]/bowler_stats[3])*6,2)
+      player_stats_list.append([bowler] + bowler_stats + [ economy])
+
+  return player_stats_list
 
 
 
@@ -68,7 +138,7 @@ def matches_won_by_runs_wickets(team_name):
 
 
 
-
+# WEB APP CODING
 
 radio = st.sidebar.radio('Main Menu :', ('Dream 11', 'Match Stats', 'Player stats' ))
 
@@ -78,6 +148,48 @@ if radio == 'Dream 11':
   _,col,_ = st.columns([1,2,1])
   with col:
     st.header('AI Based Recommended Dream11 Players')
+
+  # playing 11 teams
+  MI = ['KH Pandya','Q de Kock','RG Sharma','SA Yadav','Ishan Kishan','HH Pandya','KA Pollard','NM Coulter-Nile','RD Chahar','JJ Bumrah','TA Boult']
+  SRH = ['DA Warner','JM Bairstow','MK Pandey','Abdul Samad','KS Williamson','PK Garg','Abhishek Sharma','Sandeep Sharma','KK Ahmed','T Natarajan','Rashid Khan']
+  CSK = ['F du Plessis','AT Rayudu','SM Curran','DL Chahar','RD Gaikwad','MS Dhoni','SN Thakur','Imran Tahir','N Jagadeesan','RA Jadeja','JR Hazlewood']
+  KXIPB = ['KL Rahul','CH Gayle','N Pooran','Mandeep Singh','DJ Hooda','JDS Neesham','CJ Jordan','MA Agarwal','Mohammed Shami','Ravi Bishnoi','M Ashwin']
+  KKR = ['EJG Morgan', 'AD Russell', 'PJ Cummins', 'RA Tripathi', 'KD Karthik', 'KL Nagarkoti', 'Shubman Gill', 'N Rana','SP Narine','Shivam Mavi','CV Varun']
+  RR = ['RV Uthappa','BA Stokes','SV Samson','JC Buttler','SPD Smith','R Tewatia', 'JC Archer', 'Kartik Tyagi', 'S Gopal','JD Unadkat']
+  DC = ['SS Iyer','RR Pant','SO Hetmyer', 'AR Patel', 'MP Stoinis', 'AM Rahane', 'S Dhawan','R Ashwin', 'K Rabada','A Nortje','P Dubey']
+  RCB = ['V Kohli','D Padikkal','AJ Finch', 'AB de Villiers', 'MM Ali', 'S Dube', 'Washington Sundar','NA Saini','Mohammed Siraj','A Zampa','YS Chahal']
+
+  team = st.selectbox('Select IPL Team to view Playing 11 :', ([MI,SRH,CSK,KXIPB,KKR,RR,DC,RCB]), index=0)
+  st.table(team)
+
+  if st.checkbox('Team A vs Team B '):
+    team1 = st.selectbox('Select Team A :', ([MI,SRH,CSK,KXIPB,KKR,RR,DC,RCB]), index = 2)
+    team2 = st.selectbox('Select Team B :', ([MI,SRH,CSK,KXIPB,KKR,RR,DC,RCB]), index = 0)
+
+    team1_batting_stats = pd.DataFrame(data = team_batting_stats(MI, CSK), columns = ['Name', 'Matches', 'Runs','Out','Balls Played','fours','sixs' ,'Run Rate', 'Strike Rate'])
+    team1_bowling_stats = pd.DataFrame(data = team_bowling_stats(MI, CSK), columns = ['Name', 'Matches', 'Runs','wickets','Balls','fours','sixs' ,'Economy'])
+
+    
+    st.write(team1, ' Batsman Data against ', team2, ' Bowlers : ')
+    st.table(team1_batting_stats)
+    st.text(' ')
+    st.write(team1 , ' Bowlers Data against ', team2, ' Batsman : ')
+    st.table(team1_bowling_stats)
+    st.text(' ')
+
+    team2_batting_stats = pd.DataFrame(data = team_batting_stats(CSK, MI),columns = ['Name', 'Matches', 'Runs','Out','Balls Played' ,'fours','sixs','Run Rate', 'Strike Rate'] )
+    team2_bowling_stats = pd.DataFrame(data = team_bowling_stats(CSK, MI),columns = ['Name', 'Matches', 'Runs','wickets','Balls' ,'fours','sixs','Economy' ])
+
+    st.write(team2, ' Batsman Data against ', team1, ' Bowlers : ')
+    st.table(team2_batting_stats)
+    st.text(' ')
+    st.write(team2 , ' Bowlers Data against ', team1, ' Batsman : ')
+    st.table(team2_bowling_stats)
+    st.text(' ')
+
+
+
+
 
 #MATCH STATS RADIO BUTTON
 elif radio == 'Match Stats':
@@ -178,16 +290,14 @@ elif radio == 'Player stats':
   #Radio 2 on PLAYERS STATS
   radio_2 = st.radio('Select from the below tabs : ', ['Click for Batsman Data', 'Click for Bowler Data'])
 
-  df_ball = pd.read_csv('./IPL Ball-by-Ball 2008-2020.csv')
-
   #Radio 2 Click for BATSMAN DATA
   if radio_2 == 'Click for Batsman Data':
 
-    players_stats_df = pickle.load(open('./players_stats_df.pkl', 'rb'))
+    players_stats_df = pickle.load(open('./player_stats_df.pkl', 'rb'))
 
     #View you favourite batsman runs
     if st.checkbox('View you favourite batsman runs '):
-      player_name = st.selectbox('Select player from the list : ',(players_stats_df['name'].tolist()),index = 5 )
+      player_name = st.selectbox('Select player from the list : ',players_stats_df['name'],index = 5 )
       temp13 = players_stats_df[players_stats_df['name'] == player_name]
       st.text('Below is data for  your favourite player :')
       st.table(temp13)
@@ -218,7 +328,7 @@ elif radio == 'Player stats':
     if st.checkbox('Top 10 batsman with highest fours '):
       temp14 = players_stats_df.sort_values(by= ['fours'], ascending = False)[0:10]
       temp14 = temp14.loc[:, ['name', 'fours']]
-      st.table(temp13)  
+      st.table(temp14)  
 
   
   elif radio_2 == 'Click for Bowler Data':
