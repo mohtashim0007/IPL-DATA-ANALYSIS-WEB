@@ -203,7 +203,7 @@ if radio == 'Dream 11':
     team2_bowling_stats = pd.DataFrame(data = team_bowling_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','wickets','Balls' ,'fours','sixs','Economy' ])
 
     #Dream 11 Batsman players
-    st.markdown('DREAM 11 Recommended Batsman')
+    st.subheader('DREAM 11 Recommended Batsman')
     batsman_merge_df = pd.concat([team1_batting_stats, team2_batting_stats], ignore_index = True)
     matches_average = round(batsman_merge_df['Matches'].describe()['mean'])
     batsman_merge_df = batsman_merge_df[batsman_merge_df['Matches']>= matches_average]
@@ -213,7 +213,7 @@ if radio == 'Dream 11':
     st.table(batsman_merge_df.sort_values(by = 'predicted score per match', ascending = False)[0:6])
 
     #DREAM 11 Bowler players
-    st.markdown('DREAM 11 Recommended Batsman')
+    st.subheader('DREAM 11 Recommended Bowler')
     bowler_merge_df = pd.concat([team1_bowling_stats, team2_bowling_stats], ignore_index = True)
     matches_average = round(bowler_merge_df['Matches'].describe()['mean'])
     bowler_merge_df = bowler_merge_df[bowler_merge_df['Matches']>= matches_average]
@@ -356,54 +356,41 @@ elif radio == 'Player stats':
   with col:
     st.header('IPL Players Data' )
 
+  players_stats_df = pickle.load(open('./players_stats_df.pkl', 'rb'))
 
-  #Radio 2 on PLAYERS STATS
-  radio_2 = st.radio('Select from the below tabs : ', ['Click for Batsman Data', 'Click for Bowler Data'])
+  #View you favourite batsman runs
+  if st.checkbox('View you favourite batsman runs '):
+    player_name = st.selectbox('Select player from the list : ',players_stats_df['name'],index = 5 )
+    temp13 = players_stats_df[players_stats_df['name'] == player_name]
+    st.text('Below is data for  your favourite player :')
+    st.table(temp13)
 
-  #Radio 2 Click for BATSMAN DATA
-  if radio_2 == 'Click for Batsman Data':
+  #top 10 scorer
+  if st.checkbox('Top 10 batsman with highest runs '):
+    temp = players_stats_df.sort_values(by= ['total_runs'], ascending = False)[0:10]
+    st.table(temp)
 
-    players_stats_df = pickle.load(open('./players_stats_df.pkl', 'rb'))
+  #TOP 10 sort playera by strike rate
+  if st.checkbox('Players sorted by strike rate '):
+    temp11 = players_stats_df[players_stats_df['matches_played'] > 150 ]
+    temp11 = temp11.sort_values(by= ['strike_rate'], ascending = False)[0:10]
+    st.table(temp11)
 
-    #View you favourite batsman runs
-    if st.checkbox('View you favourite batsman runs '):
-      player_name = st.selectbox('Select player from the list : ',players_stats_df['name'],index = 5 )
-      temp13 = players_stats_df[players_stats_df['name'] == player_name]
-      st.text('Below is data for  your favourite player :')
-      st.table(temp13)
+  #Top  10 BEST AVERAGE SCORE
+  if st.checkbox('Top 10 batsman with best average score'):
+    temp12 = players_stats_df.sort_values(by= ['average_score'], ascending = False)[0:10]
+    st.table(temp12)
 
-    #top 10 scorer
-    if st.checkbox('Top 10 batsman with highest runs '):
-      temp = players_stats_df.sort_values(by= ['total_runs'], ascending = False)[0:10]
-      st.table(temp)
+  #TOP 10 BATSMAN WITH HIGHEST SIXES
+  if st.checkbox('Top 10 batsman with highest sixes '):
+    temp13 = players_stats_df.sort_values(by= ['sixs'], ascending = False)[0:10]
+    temp13 = temp13.loc[:, ['name', 'sixs']]
+    st.table(temp13)
 
-    #TOP 10 sort playera by strike rate
-    if st.checkbox('Players sorted by strike rate '):
-      temp11 = players_stats_df[players_stats_df['matches_played'] > 150 ]
-      temp11 = temp11.sort_values(by= ['strike_rate'], ascending = False)[0:10]
-      st.table(temp11)
-
-    #Top  10 BEST AVERAGE SCORE
-    if st.checkbox('Top 10 batsman with best average score'):
-      temp12 = players_stats_df.sort_values(by= ['average_score'], ascending = False)[0:10]
-      st.table(temp12)
-
-    #TOP 10 BATSMAN WITH HIGHEST SIXES
-    if st.checkbox('Top 10 batsman with highest sixes '):
-      temp13 = players_stats_df.sort_values(by= ['sixs'], ascending = False)[0:10]
-      temp13 = temp13.loc[:, ['name', 'sixs']]
-      st.table(temp13)
-
-    #TOP 10 BATSMAN WITH HIGHEST fours
-    if st.checkbox('Top 10 batsman with highest fours '):
-      temp14 = players_stats_df.sort_values(by= ['fours'], ascending = False)[0:10]
-      temp14 = temp14.loc[:, ['name', 'fours']]
-      st.table(temp14)  
+  #TOP 10 BATSMAN WITH HIGHEST fours
+  if st.checkbox('Top 10 batsman with highest fours '):
+    temp14 = players_stats_df.sort_values(by= ['fours'], ascending = False)[0:10]
+    temp14 = temp14.loc[:, ['name', 'fours']]
+    st.table(temp14)  
 
   
-  elif radio_2 == 'Click for Bowler Data':
-    st.text('Bowler data')
-
-  
-
-
