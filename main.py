@@ -187,7 +187,7 @@ if radio == 'Dream 11':
     st.table(team)
   
 
-  if st.checkbox('Team A vs Team B '):
+  if st.checkbox('Dream 11 Recommendation '):
     team1 = st.selectbox('Select Team A :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index = 2)
     #team1_str hold string value of teams eg 'MI'
     team1_str = team1
@@ -199,7 +199,33 @@ if radio == 'Dream 11':
     team1_batting_stats = pd.DataFrame(data = team_batting_stats(team1, team2), columns = ['Name', 'Matches', 'Runs','Out','Balls Played','fours','sixs' ,'Run Rate', 'Strike Rate'])
     team1_bowling_stats = pd.DataFrame(data = team_bowling_stats(team1, team2), columns = ['Name', 'Matches', 'Runs','wickets','Balls','fours','sixs' ,'Economy'])
 
-    
+    team2_batting_stats = pd.DataFrame(data = team_batting_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','Out','Balls Played' ,'fours','sixs','Run Rate', 'Strike Rate'] )
+    team2_bowling_stats = pd.DataFrame(data = team_bowling_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','wickets','Balls' ,'fours','sixs','Economy' ])
+
+    #Dream 11 Batsman players
+    st.markdown('DREAM 11 Recommended Batsman')
+    batsman_merge_df = pd.concat([team1_batting_stats, team2_batting_stats], ignore_index = True)
+    matches_average = round(batsman_merge_df['Matches'].describe()['mean'])
+    batsman_merge_df = batsman_merge_df[batsman_merge_df['Matches']>= matches_average]
+    #player selection formula .. calculate balls played per match average then convert to overs and then multiply by run rate add one more 
+    #colunm arrange them by this column
+    batsman_merge_df['predicted score per match'] = (batsman_merge_df['Balls Played']/batsman_merge_df['Matches'])*(batsman_merge_df['Run Rate']/6)
+    st.table(batsman_merge_df.sort_values(by = 'predicted score per match', ascending = False)[0:6])
+
+    #DREAM 11 Bowler players
+    st.markdown('DREAM 11 Recommended Batsman')
+    bowler_merge_df = pd.concat([team1_bowling_stats, team2_bowling_stats], ignore_index = True)
+    matches_average = round(bowler_merge_df['Matches'].describe()['mean'])
+    bowler_merge_df = bowler_merge_df[bowler_merge_df['Matches']>= matches_average]
+    bowler_merge_df['Runs bowler can give per match'] = (bowler_merge_df['Balls']/bowler_merge_df['Matches'])*(bowler_merge_df['Economy']/6)
+    bowler_merge_df['wickets per match'] = bowler_merge_df['wickets']/bowler_merge_df['Matches']
+    #dream 11 teams 5 bowler
+    #first sort with Runs bowler can give per match the wickets per match
+
+    st.table(bowler_merge_df.sort_values(by = ['Runs bowler can give per match']).sort_values(by = 'wickets per match', ascending = False)[0:5])
+
+
+
     st.write(team1_str, ' Batsman Data against ', team2_str, ' Bowlers : ')
     st.table(team1_batting_stats)
     st.text(' ')
@@ -207,8 +233,6 @@ if radio == 'Dream 11':
     st.table(team1_bowling_stats)
     st.text(' ')
 
-    team2_batting_stats = pd.DataFrame(data = team_batting_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','Out','Balls Played' ,'fours','sixs','Run Rate', 'Strike Rate'] )
-    team2_bowling_stats = pd.DataFrame(data = team_bowling_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','wickets','Balls' ,'fours','sixs','Economy' ])
 
     st.write(team2_str, ' Batsman Data against ', team1_str, ' Bowlers : ')
     st.table(team2_batting_stats)
