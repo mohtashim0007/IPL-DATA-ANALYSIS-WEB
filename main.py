@@ -138,7 +138,7 @@ def matches_won_by_runs_wickets(team_name):
 
 
 #IPL TEAM NAMES
- MI = ['KH Pandya','Q de Kock','RG Sharma','SA Yadav','Ishan Kishan','HH Pandya','KA Pollard','NM Coulter-Nile','RD Chahar','JJ Bumrah','TA Boult']
+MI = ['KH Pandya','Q de Kock','RG Sharma','SA Yadav','Ishan Kishan','HH Pandya','KA Pollard','NM Coulter-Nile','RD Chahar','JJ Bumrah','TA Boult']
 SRH = ['DA Warner','JM Bairstow','MK Pandey','Abdul Samad','KS Williamson','PK Garg','Abhishek Sharma','Sandeep Sharma','KK Ahmed','T Natarajan','Rashid Khan']
 CSK = ['F du Plessis','AT Rayudu','SM Curran','DL Chahar','RD Gaikwad','MS Dhoni','SN Thakur','Imran Tahir','N Jagadeesan','RA Jadeja','JR Hazlewood']
 KXIPB = ['KL Rahul','CH Gayle','N Pooran','Mandeep Singh','DJ Hooda','JDS Neesham','CJ Jordan','MA Agarwal','Mohammed Shami','Ravi Bishnoi','M Ashwin']
