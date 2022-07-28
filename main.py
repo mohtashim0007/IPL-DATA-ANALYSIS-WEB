@@ -293,7 +293,7 @@ elif radio == 'Player stats':
   #Radio 2 Click for BATSMAN DATA
   if radio_2 == 'Click for Batsman Data':
 
-    players_stats_df = pickle.load(open('./player_stats_df.pkl', 'rb'))
+    players_stats_df = pickle.load(open('./players_stats_df.pkl', 'rb'))
 
     #View you favourite batsman runs
     if st.checkbox('View you favourite batsman runs '):
