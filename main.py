@@ -180,11 +180,12 @@ if radio == 'Dream 11':
 
   # playing 11 teams
 
-
-  team = st.selectbox('Select IPL Team to view Playing 11 :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index=0)
-  #team getting string values so map this to the list
-  team = IPL_Teams_name(team)
-  st.table(team)
+  if st.checkbox('View IPL Teams Playing 11  '):
+    team = st.selectbox('Select IPL Team to view Playing 11 :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index=0)
+    #team getting string values so map this to the list
+    team = IPL_Teams_name(team)
+    st.table(team)
+  
   
   if st.checkbox('Team A vs Team B '):
     team1 = st.selectbox('Select Team A :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index = 2)
@@ -216,7 +217,19 @@ if radio == 'Dream 11':
     st.table(team2_bowling_stats)
     st.text(' ')
 
-
+  if st.checkbox('Batsman Data against a Bowler :'):
+    batsman = st.selectbox('Select the batsman name : ', (df_ball['batsman'].unique().tolist()), index = 15)
+    bowler = st.selectbox('Select the bowler name : ', (df_ball['bowler'].unique().tolist()), index = 15)
+    #return [total_matches_played, total_runs,is_wicket, total_balls_faced,fours,sixs]
+    if (len(batsman_against_bowler(batsman, bowler) > 1):
+      st.write('Total matches played = ', total_matches_played)
+      st.write('Runs Scored = ', total_runs)
+      st.write('Nuber of times Out = ', is_wicket)
+      st.write('Total balls faced = ', total_balls_faced)
+      st.write('Fours = ', fours)
+      st.write('Sixes = ', sixs)
+    else:
+      st.write('They both did not faced each other.')
 
 
 
