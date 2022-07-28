@@ -137,6 +137,35 @@ def matches_won_by_runs_wickets(team_name):
   st.image(img2)
 
 
+#IPL TEAM NAMES
+ MI = ['KH Pandya','Q de Kock','RG Sharma','SA Yadav','Ishan Kishan','HH Pandya','KA Pollard','NM Coulter-Nile','RD Chahar','JJ Bumrah','TA Boult']
+SRH = ['DA Warner','JM Bairstow','MK Pandey','Abdul Samad','KS Williamson','PK Garg','Abhishek Sharma','Sandeep Sharma','KK Ahmed','T Natarajan','Rashid Khan']
+CSK = ['F du Plessis','AT Rayudu','SM Curran','DL Chahar','RD Gaikwad','MS Dhoni','SN Thakur','Imran Tahir','N Jagadeesan','RA Jadeja','JR Hazlewood']
+KXIPB = ['KL Rahul','CH Gayle','N Pooran','Mandeep Singh','DJ Hooda','JDS Neesham','CJ Jordan','MA Agarwal','Mohammed Shami','Ravi Bishnoi','M Ashwin']
+KKR = ['EJG Morgan', 'AD Russell', 'PJ Cummins', 'RA Tripathi', 'KD Karthik', 'KL Nagarkoti', 'Shubman Gill', 'N Rana','SP Narine','Shivam Mavi','CV Varun']
+RR = ['RV Uthappa','BA Stokes','SV Samson','JC Buttler','SPD Smith','R Tewatia', 'JC Archer', 'Kartik Tyagi', 'S Gopal','JD Unadkat']
+DC = ['SS Iyer','RR Pant','SO Hetmyer', 'AR Patel', 'MP Stoinis', 'AM Rahane', 'S Dhawan','R Ashwin', 'K Rabada','A Nortje','P Dubey']
+RCB = ['V Kohli','D Padikkal','AJ Finch', 'AB de Villiers', 'MM Ali', 'S Dube', 'Washington Sundar','NA Saini','Mohammed Siraj','A Zampa','YS Chahal']
+
+def IPL_Teams_name(team):
+  if team == 'MI':
+    team = MI
+  elif team == 'SRH':
+    team = SRH
+  elif team == 'CSK':
+    team = CSK  
+  elif team == 'KXIPB':
+    team = KXIPB
+  elif team == 'KKR':
+    team = KKR
+  elif team == 'RR':
+    team = RR
+  elif team == 'DC':
+    team = DC
+  elif team == 'RCB':
+    team = RCB
+  return team
+
 
 # WEB APP CODING
 
@@ -150,24 +179,21 @@ if radio == 'Dream 11':
     st.header('AI Based Recommended Dream11 Players')
 
   # playing 11 teams
-  MI = ['KH Pandya','Q de Kock','RG Sharma','SA Yadav','Ishan Kishan','HH Pandya','KA Pollard','NM Coulter-Nile','RD Chahar','JJ Bumrah','TA Boult']
-  SRH = ['DA Warner','JM Bairstow','MK Pandey','Abdul Samad','KS Williamson','PK Garg','Abhishek Sharma','Sandeep Sharma','KK Ahmed','T Natarajan','Rashid Khan']
-  CSK = ['F du Plessis','AT Rayudu','SM Curran','DL Chahar','RD Gaikwad','MS Dhoni','SN Thakur','Imran Tahir','N Jagadeesan','RA Jadeja','JR Hazlewood']
-  KXIPB = ['KL Rahul','CH Gayle','N Pooran','Mandeep Singh','DJ Hooda','JDS Neesham','CJ Jordan','MA Agarwal','Mohammed Shami','Ravi Bishnoi','M Ashwin']
-  KKR = ['EJG Morgan', 'AD Russell', 'PJ Cummins', 'RA Tripathi', 'KD Karthik', 'KL Nagarkoti', 'Shubman Gill', 'N Rana','SP Narine','Shivam Mavi','CV Varun']
-  RR = ['RV Uthappa','BA Stokes','SV Samson','JC Buttler','SPD Smith','R Tewatia', 'JC Archer', 'Kartik Tyagi', 'S Gopal','JD Unadkat']
-  DC = ['SS Iyer','RR Pant','SO Hetmyer', 'AR Patel', 'MP Stoinis', 'AM Rahane', 'S Dhawan','R Ashwin', 'K Rabada','A Nortje','P Dubey']
-  RCB = ['V Kohli','D Padikkal','AJ Finch', 'AB de Villiers', 'MM Ali', 'S Dube', 'Washington Sundar','NA Saini','Mohammed Siraj','A Zampa','YS Chahal']
 
-  team = st.selectbox('Select IPL Team to view Playing 11 :', ([MI,SRH,CSK,KXIPB,KKR,RR,DC,RCB]), index=0)
+
+  team = st.selectbox('Select IPL Team to view Playing 11 :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index=0)
+  #team getting string values so map this to the list
+  team = IPL_Teams_name(team)
   st.table(team)
-
+  
   if st.checkbox('Team A vs Team B '):
-    team1 = st.selectbox('Select Team A :', ([MI,SRH,CSK,KXIPB,KKR,RR,DC,RCB]), index = 2)
-    team2 = st.selectbox('Select Team B :', ([MI,SRH,CSK,KXIPB,KKR,RR,DC,RCB]), index = 0)
+    team1 = st.selectbox('Select Team A :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index = 2)
+    team1 = IPL_Teams_name(team1)
+    team2 = st.selectbox('Select Team B :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index = 0)
+    team2 = IPL_Teams_name(team2)
 
-    team1_batting_stats = pd.DataFrame(data = team_batting_stats(MI, CSK), columns = ['Name', 'Matches', 'Runs','Out','Balls Played','fours','sixs' ,'Run Rate', 'Strike Rate'])
-    team1_bowling_stats = pd.DataFrame(data = team_bowling_stats(MI, CSK), columns = ['Name', 'Matches', 'Runs','wickets','Balls','fours','sixs' ,'Economy'])
+    team1_batting_stats = pd.DataFrame(data = team_batting_stats(team1, team2), columns = ['Name', 'Matches', 'Runs','Out','Balls Played','fours','sixs' ,'Run Rate', 'Strike Rate'])
+    team1_bowling_stats = pd.DataFrame(data = team_bowling_stats(team1, team2), columns = ['Name', 'Matches', 'Runs','wickets','Balls','fours','sixs' ,'Economy'])
 
     
     st.write(team1, ' Batsman Data against ', team2, ' Bowlers : ')
@@ -177,8 +203,8 @@ if radio == 'Dream 11':
     st.table(team1_bowling_stats)
     st.text(' ')
 
-    team2_batting_stats = pd.DataFrame(data = team_batting_stats(CSK, MI),columns = ['Name', 'Matches', 'Runs','Out','Balls Played' ,'fours','sixs','Run Rate', 'Strike Rate'] )
-    team2_bowling_stats = pd.DataFrame(data = team_bowling_stats(CSK, MI),columns = ['Name', 'Matches', 'Runs','wickets','Balls' ,'fours','sixs','Economy' ])
+    team2_batting_stats = pd.DataFrame(data = team_batting_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','Out','Balls Played' ,'fours','sixs','Run Rate', 'Strike Rate'] )
+    team2_bowling_stats = pd.DataFrame(data = team_bowling_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','wickets','Balls' ,'fours','sixs','Economy' ])
 
     st.write(team2, ' Batsman Data against ', team1, ' Bowlers : ')
     st.table(team2_batting_stats)
