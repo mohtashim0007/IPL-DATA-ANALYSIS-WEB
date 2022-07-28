@@ -225,10 +225,13 @@ if radio == 'Dream 11':
     if (len(result) > 1):
       st.write('Total matches played = ', result[0])
       st.write('Runs Scored = ', result[1])
+      st.write('Strike Rate = ', round((result[1]/result[3])*100, 2))
+      st.write('Run Rate = ', round((result[1]/result[3])*6,2))      
       st.write('Nuber of times Out = ', result[2])
       st.write('Total balls faced = ', result[3])
       st.write('Fours = ', result[4])
       st.write('Sixes = ', result[5])
+
     else:
       st.write('They both did not faced each other.')
 
