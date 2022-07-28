@@ -188,28 +188,31 @@ if radio == 'Dream 11':
   
   if st.checkbox('Team A vs Team B '):
     team1 = st.selectbox('Select Team A :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index = 2)
+    #team1_str hold string value of teams eg 'MI'
+    team1_str = team1
     team1 = IPL_Teams_name(team1)
     team2 = st.selectbox('Select Team B :', (['MI','SRH','CSK','KXIPB','KKR','RR','DC','RCB']), index = 0)
+    team2_str = team2
     team2 = IPL_Teams_name(team2)
 
     team1_batting_stats = pd.DataFrame(data = team_batting_stats(team1, team2), columns = ['Name', 'Matches', 'Runs','Out','Balls Played','fours','sixs' ,'Run Rate', 'Strike Rate'])
     team1_bowling_stats = pd.DataFrame(data = team_bowling_stats(team1, team2), columns = ['Name', 'Matches', 'Runs','wickets','Balls','fours','sixs' ,'Economy'])
 
     
-    st.write(team1, ' Batsman Data against ', team2, ' Bowlers : ')
+    st.write(team1_str, ' Batsman Data against ', team2_str, ' Bowlers : ')
     st.table(team1_batting_stats)
     st.text(' ')
-    st.write(team1 , ' Bowlers Data against ', team2, ' Batsman : ')
+    st.write(team1_str , ' Bowlers Data against ', team2_str, ' Batsman : ')
     st.table(team1_bowling_stats)
     st.text(' ')
 
     team2_batting_stats = pd.DataFrame(data = team_batting_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','Out','Balls Played' ,'fours','sixs','Run Rate', 'Strike Rate'] )
     team2_bowling_stats = pd.DataFrame(data = team_bowling_stats(team2, team1),columns = ['Name', 'Matches', 'Runs','wickets','Balls' ,'fours','sixs','Economy' ])
 
-    st.write(team2, ' Batsman Data against ', team1, ' Bowlers : ')
+    st.write(team2_str, ' Batsman Data against ', team1_str, ' Bowlers : ')
     st.table(team2_batting_stats)
     st.text(' ')
-    st.write(team2 , ' Bowlers Data against ', team1, ' Batsman : ')
+    st.write(team2_str , ' Bowlers Data against ', team1_str, ' Batsman : ')
     st.table(team2_bowling_stats)
     st.text(' ')
 
