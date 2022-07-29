@@ -167,7 +167,7 @@ def IPL_Teams_name(team):
   return team
 
 
-# WEB APP CODING
+                    ########## WEB APP CODING  ##########
 
 radio = st.sidebar.radio('Main Menu :', ('Dream 11', 'Match Stats', 'Player stats' ))
 
@@ -360,11 +360,31 @@ elif radio == 'Player stats':
   players_stats_df = pickle.load(open('./players_stats_df.pkl', 'rb'))
 
   #View you favourite batsman runs
-  if st.checkbox('View you favourite batsman runs '):
+  if st.checkbox('View you favourite batsman Data '):
     player_name = st.selectbox('Select player from the list : ',players_stats_df['name'],index = 5 )
     temp13 = players_stats_df[players_stats_df['name'] == player_name]
     st.text('Below is data for  your favourite player :')
     st.table(temp13)
+
+    #### SIMILAR PLAYERS ALGO
+    similarity = pickle.load(open('./similarity.pkl','rb'))
+
+    player_name_ind = temp13.index[0]
+    similarity_list = similarity[player_name_ind].tolist()
+    
+    similarity_indexes = []
+
+    for i in range(6):
+      ind = similarity_list.index(max(similarity_list))
+      print(similarity_list[ind])
+      similarity_indexes.append(ind)
+      similarity_list[ind] = -0.99
+      i = i+1
+    st.subheader('Similar Players : ML Based recommended ')
+    st.table(players_stats_df.iloc[similarity_indexes])
+
+
+
 
   #top 10 scorer
   if st.checkbox('Top 10 batsman with highest runs '):
@@ -372,7 +392,7 @@ elif radio == 'Player stats':
     st.table(temp)
 
   #TOP 10 sort playera by strike rate
-  if st.checkbox('Players sorted by strike rate '):
+  if st.checkbox('Top 10 batsman with strike rate '):
     temp11 = players_stats_df[players_stats_df['matches_played'] > 150 ]
     temp11 = temp11.sort_values(by= ['strike_rate'], ascending = False)[0:10]
     st.table(temp11)
