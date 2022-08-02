@@ -366,6 +366,17 @@ elif radio == 'Player stats':
     st.text('Below is data for  your favourite player :')
     st.table(temp13)
 
+    st.write('Year wise Batsman score :')
+    temp8 = df_ball[df_ball['batsman'] == player_name]
+    temp8 = temp8.groupby(by = 'date')['total_runs'].sum()
+    fig = plt.figure()
+    sns.set_theme(style="whitegrid")
+    sns.lineplot(x= temp8.index, y = temp8, linewidth = '2.5', palette='tab8', markers=True)
+    #sns.scatterplot(x=temp8.index, y = temp8,palette='pastel')
+    plt.savefig('fig2.jpg')
+    img = cv2.imread('fig2.jpg')
+    st.image(img)
+
     #### SIMILAR PLAYERS ALGO
     similarity = pickle.load(open('./similarity.pkl','rb'))
 
@@ -383,6 +394,34 @@ elif radio == 'Player stats':
     st.subheader('Similar Players : ML Based recommended ')
     st.table(players_stats_df.iloc[similarity_indexes])
 
+    st.write('Similar players Score Year wise :')
+
+    name_list = players_stats_df.iloc[similarity_indexes ]['name'].tolist()
+    temp8 = df_ball[df_ball['batsman'] == name_list[0]]
+    temp8 = temp8.groupby(by = 'date')['total_runs'].sum()
+ 
+    df_5 = pd.DataFrame({ 'runs':temp8})
+    df_5.reset_index(inplace = True)
+    df_5['name'] = name_list[0]
+    df_5
+
+    for i in range(1,6):
+      temp8 = df_ball[df_ball['batsman'] == name_list[i]]
+      temp8 = temp8.groupby(by = 'date')['total_runs'].sum()
+      df_4 = pd.DataFrame({ 'runs':temp8})
+      df_4.reset_index(inplace = True)
+      df_4['name'] = name_list[i]
+      df_5 = pd.concat((df_5, df_4))
+
+    #Reset indexex
+    df_5.reset_index(drop = True, inplace =True)
+
+    sns.set_theme(style="whitegrid")
+    fig = plt.figure(figsize=(12,5))
+    sns.lineplot(x= 'date', y = 'runs',data=df_5, hue='name',markers=True,  linewidth = '2.5', palette = np.random.choice(fig_colors))
+    plt.savefig('fig3.jpg')
+    img = cv2.mread('fig3.jpg')
+    st.write(img)
 
 
 
