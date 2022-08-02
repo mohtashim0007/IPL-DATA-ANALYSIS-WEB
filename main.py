@@ -434,8 +434,8 @@ elif radio == 'Player stats':
     fig = plt.figure(figsize=(12,5))
     sns.lineplot(x= 'date', y = 'runs',data=df_5, hue='name',markers=True,  linewidth = '2.5', palette = np.random.choice(fig_colors))
     plt.savefig('fig3.jpg')
-    img = cv2.imread('fig3.jpg')
-    st.write(img)
+    img2 = cv2.imread('fig3.jpg')
+    st.image(img2)
 
 
 
