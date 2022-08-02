@@ -361,6 +361,11 @@ elif radio == 'Player stats':
 
   #View you favourite batsman runs
   if st.checkbox('View you favourite batsman Data '):
+    df = df_ball
+    df2 = df_matches.loc[:,['id', 'date']]
+    df = pd.merge(df,df2,on = 'id')
+    df['date'] = pd.to_numeric(df['date'], downcast = 'integer')
+    df_ball = df
     player_name = st.selectbox('Select player from the list : ',players_stats_df['name'],index = 505)
     temp13 = players_stats_df[players_stats_df['name'] == player_name]
     st.text('Below is data for  your favourite player :')
