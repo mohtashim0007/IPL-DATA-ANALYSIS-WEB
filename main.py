@@ -10,6 +10,13 @@ import streamlit as st
 fig_colors = ['Set1', 'Set2', 'Set3', 'tab10' ,'deep', 'hls', 'husl', 'rocket_r', 'YlOrBr', 'Spectral']
 
 df_matches = pd.read_csv('IPL Matches 2008-2020.csv')
+df = df_matches
+date_list = df['date'].tolist()
+for i in range(len(date_list)):
+  date_list[i] = date_list[i][0:4]
+df['date'] = date_list
+df_matches = df
+
 df_ball = pd.read_csv('./IPL Ball-by-Ball 2008-2020.csv')
 
 #batsman stats aganst a particular bowler
