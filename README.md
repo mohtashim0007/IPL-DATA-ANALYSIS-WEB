@@ -1,8 +1,8 @@
-# IPL-DATA-ANALYSIS-ST
+# IPL-DATA-ANALYSIS
 
 This Project work is completed by Mohd Mohtashim.
 
-IPL EDA DashBoard : In depth Analysis of IPL data between 2008-2020, do explore my Project [Click Here](https://mohtashim0007-ipl-data-analysis-main-7vqu37.streamlitapp.com/)
+IPL EDA DashBoard : In depth Analysis of IPL data between 2008-2020, do explore my Project [Click Here](https://mohtashim0007-ipl-data-analysis-web-main-z7obzm.streamlitapp.com/)
 
 HIGHLIGHTED FEATURES : 
 There 3 main features in the website
