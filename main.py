@@ -368,11 +368,14 @@ elif radio == 'Player stats':
 
   #View you favourite batsman runs
   if st.checkbox('View you favourite batsman Data '):
+
+    #Adding date colunm in df_ball dataset 
     df = df_ball
     df2 = df_matches.loc[:,['id', 'date']]
     df = pd.merge(df,df2,on = 'id')
     df['date'] = pd.to_numeric(df['date'], downcast = 'integer')
     df_ball = df
+
     player_name = st.selectbox('Select player from the list : ',players_stats_df['name'],index = 505)
     temp13 = players_stats_df[players_stats_df['name'] == player_name]
     st.text('Below is data for  your favourite player :')
@@ -415,7 +418,6 @@ elif radio == 'Player stats':
     df_5 = pd.DataFrame({ 'runs':temp8})
     df_5.reset_index(inplace = True)
     df_5['name'] = name_list[0]
-    df_5
 
     for i in range(1,6):
       temp8 = df_ball[df_ball['batsman'] == name_list[i]]
@@ -432,7 +434,7 @@ elif radio == 'Player stats':
     fig = plt.figure(figsize=(12,5))
     sns.lineplot(x= 'date', y = 'runs',data=df_5, hue='name',markers=True,  linewidth = '2.5', palette = np.random.choice(fig_colors))
     plt.savefig('fig3.jpg')
-    img = cv2.mread('fig3.jpg')
+    img = cv2.imread('fig3.jpg')
     st.write(img)
 
 
